@@ -40,3 +40,10 @@ echo "source ~/wall_guidance_ws/devel/setup.bash" >> ~/.bashrc
 echo "export TURTLEBOT3_MODEL=burger" >> ~/.bashrc
 source ~/.bashrc
 ```
+
+### How to run
+```
+roslaunch turtlebot3_gazebo turtlebot3_house.launch
+roslaunch turtlebot3_gazebo turtlebot3_gazebo_rviz.launch
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+```
