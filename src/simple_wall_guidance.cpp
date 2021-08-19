@@ -5,23 +5,24 @@
 
 #include <tf2/utils.h>
 
-constexpr float kp = 0.01;
+constexpr float kp = 1.2;
 constexpr float ki = 0;
 constexpr float kd = 0;
 
-constexpr float cmd_vel_linear = 0.2;
+constexpr float cmd_vel_linear = 0.1;
 
+float range_min;
 float target_angle;
 float current_angle;
 
 void scanCb(const sensor_msgs::LaserScanConstPtr& msg)
 {
-    float range_min = *min_element(msg->ranges.begin(), msg->ranges.end());
+    range_min = *min_element(msg->ranges.begin(), msg->ranges.end());
     for(float i=0; i < 360; i++){
-        // std::cout << i;
         if(range_min == msg->ranges[i]){
-            target_angle = i;
-            // std::cout << i << ", " << target_angle << ", " << range_min << "\n";
+            target_angle = (i/180)*M_PI;
+            if(target_angle > M_PI && target_angle <= 2*M_PI)
+                target_angle += -2*M_PI;
             break;
         }
     }
@@ -29,9 +30,7 @@ void scanCb(const sensor_msgs::LaserScanConstPtr& msg)
 
 void odomCb(const nav_msgs::Odometry::ConstPtr &msg)
 {
-    current_angle = (tf2::getYaw(msg->pose.pose.orientation)*180) / M_PI;
-    if(current_angle >= -180 && current_angle < 0)
-        current_angle += 360;
+    current_angle = tf2::getYaw(msg->pose.pose.orientation);
 }
 
 geometry_msgs::Twist pidCmdVelPub()
@@ -39,25 +38,19 @@ geometry_msgs::Twist pidCmdVelPub()
     geometry_msgs::Twist cmd_vel;
     static float prev_err = 0, cmd_vel_pid = 0;
     float err, P;
+    target_angle = target_angle + current_angle;
     err = target_angle - current_angle;
-    // err = prev_err - target_value;
     
     P = kp * err;
-    // prev_err = err;
-
     cmd_vel_pid = P;
 
     cmd_vel.linear.x = cmd_vel_linear;
     cmd_vel.angular.z = cmd_vel_pid;
-    std::cout << current_angle << ", " 
-              << target_angle << ", " 
-              << cmd_vel_pid << ", " 
+    std::cout << "current_angle: " << current_angle 
+              << " target_angle: " <<  target_angle
+              << " angular_z_pid: " <<  cmd_vel_pid
+              << " range_min: " << range_min
               << "\n";
-    // std::cout << "linear_x: " << cmd_vel_linear 
-    //           << " angular_z: " << cmd_vel_pid 
-    //           << " range_min: " << range_min
-    //           << "\n";
-
     return cmd_vel;
 }
 
@@ -76,10 +69,8 @@ int main(int argc, char** argv)
     ros::Rate loop_rate(5);
     while (ros::ok){
         pub_twist.publish(pidCmdVelPub());
-
         ros::spinOnce();
         loop_rate.sleep();
     }
-    
     return 0;
 }
