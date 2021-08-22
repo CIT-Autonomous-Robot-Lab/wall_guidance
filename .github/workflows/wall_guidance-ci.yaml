@@ -22,7 +22,7 @@ jobs:
           rosdep install -r -y --from-paths --ignore-src ./
           sudo apt install bear
           source /opt/ros/melodic/setup.bash
-          cmake
+          cmake .
           bear make
 
       - uses: ZedThree/clang-tidy-review@v0.6.0
