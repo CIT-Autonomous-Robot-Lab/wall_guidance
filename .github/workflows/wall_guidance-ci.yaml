@@ -31,10 +31,11 @@ jobs:
                            -DBOUT_BUILD_DOCS=OFF \
                            -DCMAKE_EXPORT_COMPILE_COMMANDS=On
 
-      - uses:  uhobeike/ros-melodic-clang-tidy-review@v1.2
+      - uses:  uhobeike/ros-melodic-clang-tidy-review@v1.3
         id: review
         with:
           build_dir: build
+          max_comments: 100
           clang_tidy_checks: '-*,performance-*,clang-analyzer-*,-clang-analyzer-cplusplus*'
       # If there are any comments, fail the check
       - name: Passed C++ style guide checks
