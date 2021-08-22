@@ -15,6 +15,7 @@ jobs:
           cd  ros_setup_scripts_Ubuntu18.04_server
           bash step0.bash
           bash step1.bash
+          cd ..
           source /opt/ros/melodic/setup.bash
           cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
       
