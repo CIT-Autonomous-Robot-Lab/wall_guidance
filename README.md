@@ -1,3 +1,4 @@
+[![ros-melodic-clang-tidy-review](https://github.com/CIT-Autonomous-Robot-Lab/wall_guidance/actions/workflows/wall_guidance-ci.yaml/badge.svg)](https://github.com/CIT-Autonomous-Robot-Lab/wall_guidance/actions/workflows/wall_guidance-ci.yaml)
 # wall_guidance
 
 ### How to install
