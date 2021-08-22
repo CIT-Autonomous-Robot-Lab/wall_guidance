@@ -6,8 +6,8 @@
 #include <tf2/utils.h>
 
 constexpr float kp = 1.2;
-constexpr float ki = 0;
-constexpr float kd = 0;
+constexpr float ki = 0.0;
+constexpr float kd = 0.0;
 
 constexpr float cmd_vel_linear = 0.1;
 
