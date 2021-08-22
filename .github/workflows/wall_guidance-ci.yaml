@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
+      
       - name: make_compile_commands.json
         run: |
           ls
@@ -18,8 +20,6 @@ jobs:
           cd ..
           source /opt/ros/melodic/setup.bash
           cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-      
-      - uses: actions/checkout@v2
 
       # Optionally generate compile_commands.json
 
