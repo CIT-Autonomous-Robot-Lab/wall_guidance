@@ -6,23 +6,24 @@
 #include <tf2/utils.h>
 
 constexpr float kp = 1.2;
-constexpr float ki = 0;
-constexpr float kd = 0;
+constexpr float ki = 0.0;
+constexpr float kd = 0.0;
 
 constexpr float cmd_vel_linear = 0.1;
 
 float range_min;
-float target_angle;
-float current_angle;
+double target_angle;
+double current_angle;
 
 void scanCb(const sensor_msgs::LaserScanConstPtr& msg)
 {
     range_min = *min_element(msg->ranges.begin(), msg->ranges.end());
-    for(float i=0; i < 360; i++){
+    for(uint16_t i=0; i < 360; i++){
         if(range_min == msg->ranges[i]){
             target_angle = (i/180)*M_PI;
-            if(target_angle > M_PI && target_angle <= 2*M_PI)
+            if(target_angle > M_PI && target_angle <= 2*M_PI){
                 target_angle += -2*M_PI;
+            }
             break;
         }
     }
@@ -37,7 +38,7 @@ geometry_msgs::Twist pidCmdVelPub()
 {
     geometry_msgs::Twist cmd_vel;
     static float prev_err = 0, cmd_vel_pid = 0;
-    float err, P;
+    float err = 0, P = 0;
     target_angle = target_angle + current_angle;
     err = target_angle - current_angle;
     
@@ -61,6 +62,18 @@ int main(int argc, char** argv)
     ros::NodeHandle nh;
     ros::Publisher pub_twist; 
     ros::Subscriber sub_scan, sub_odom;
+
+    std::string test;
+    std::string test1;
+    std::string test2;
+    std::string test3;
+    std::string test4;
+    std::string test5;
+    std::string test6;
+    std::string test7;
+    std::string test8;
+    std::string test9;
+    std::string test10;
 
     pub_twist = nh.advertise<geometry_msgs::Twist>("cmd_vel", 1);
     sub_scan = nh.subscribe("scan", 1, scanCb);

@@ -1,0 +1,42 @@
+name: ros-melodic-clang-tidy-review
+
+on: [pull_request]
+
+jobs:
+  review:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: make_compile_commands.json
+        run: |
+          ls
+          git clone https://github.com/ryuichiueda/ros_setup_scripts_Ubuntu18.04_desktop.git
+          cd  ros_setup_scripts_Ubuntu18.04_desktop
+          bash step0.bash
+          bash step1.bash
+          cd ..
+          rm -rf ros_setup_scripts_Ubuntu18.04_desktop
+          rosdep install -r -y --from-paths --ignore-src ./
+          sudo apt install bear
+          source /opt/ros/melodic/setup.bash
+          cmake . -B build -DBUILD_SHARED_LIBS=ON \
+                           -DBOUT_ENABLE_OPENMP=ON \
+                           -DBOUT_USE_PETSC=ON \
+                           -DBOUT_USE_SLEPC=ON \
+                           -DBOUT_USE_HDF5=ON \
+                           -DBOUT_USE_SUNDIALS=ON \
+                           -DBOUT_BUILD_EXAMPLES=ON \
+                           -DBOUT_BUILD_DOCS=OFF \
+                           -DCMAKE_EXPORT_COMPILE_COMMANDS=On
+
+      - uses:  uhobeike/ros-melodic-clang-tidy-review@v1.5
+        id: review
+        with:
+          build_dir: build
+          max_comments: 100
+          clang_tidy_checks: '-*,performance-*,readability-*,bugprone-*,clang-analyzer-*,cppcoreguidelines-*,mpi-*,misc-*,-readability-implicit-bool-conversion,-readability-qualified-auto,-cppcoreguidelines-owning-memory,-cppcoreguidelines-avoid-magic-numbers,-readability-magic-numbers,-readability-static-accessed-through-instance,-cppcoreguidelines-pro-type-static-cast-downcast,-bugprone-suspicious-enum-usage,-readability-uppercase-literal-suffix,-cppcoreguidelines-avoid-non-const-global-variables,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-misc-no-recursion,-readability-isolate-declaration,-cppcoreguidelines-pro-type-vararg,-misc-non-private-member-variables-in-classes,-performance-no-automatic-move,-readability-avoid-const-params-in-decls,-cppcoreguidelines-non-private-member-variables-in-classes'
+      - name: Passed C++ style guide checks
+        if: steps.review.outputs.total_comments > 0
+        run: exit 1
