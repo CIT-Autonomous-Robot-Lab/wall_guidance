@@ -31,7 +31,7 @@ jobs:
                            -DBOUT_BUILD_DOCS=OFF \
                            -DCMAKE_EXPORT_COMPILE_COMMANDS=On
 
-      - uses:  uhobeike/ros-melodic-clang-tidy-review@v1.3
+      - uses:  uhobeike/ros-melodic-clang-tidy-review@v1.4
         id: review
         with:
           build_dir: build
