@@ -1,4 +1,4 @@
-name: clang-tidy-review
+name: ros-melodic-clang-tidy-review
 
 on: [pull_request]
 
@@ -31,7 +31,7 @@ jobs:
                   -DBOUT_BUILD_DOCS=OFF \
                   -DCMAKE_EXPORT_COMPILE_COMMANDS=On
 
-      - uses:  uhobeike/ros-melodic-clang-tidy-review@v1 
+      - uses:  uhobeike/ros-melodic-clang-tidy-review@v1.1
         id: review
         with:
           build_dir: build
