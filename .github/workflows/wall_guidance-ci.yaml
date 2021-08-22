@@ -9,7 +9,14 @@ jobs:
 
     steps:
       - name: make_compile_commands.json
-        run: cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+        run: |
+          ls
+          git clone https://github.com/ryuichiueda/ros_setup_scripts_Ubuntu18.04_server.git
+          cd  ros_setup_scripts_Ubuntu18.04_server
+          bash step0.bash
+          bash step1.bash
+          source /opt/ros/melodic/setup.bash
+          cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
       
       - uses: actions/checkout@v2
 
