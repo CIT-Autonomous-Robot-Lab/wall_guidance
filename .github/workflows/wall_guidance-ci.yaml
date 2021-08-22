@@ -19,6 +19,7 @@ jobs:
           bash step1.bash
           cd .. && cd ..
           mkdir -p src && mv wall_guidance src/wall_guidance
+          rosdep install -r -y --from-paths --ignore-src ./
           sudo apt install bear
           sudo apt install python-catkin-tools
           source /opt/ros/melodic/setup.bash
