@@ -6,9 +6,16 @@ on:
       - '**.md'
 jobs:
   clang-tidy:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
+    - name: Install clang-tidy
+      run: |
+        git clone https://github.com/ryuichiueda/ros_setup_scripts_Ubuntu18.04_server.git
+        cd  ros_setup_scripts_Ubuntu18.04
+        bash step0.bash
+        bash step1.bash
+        cd ..
     - name: Install clang-tidy
       run: |
         sudo apt-get update
