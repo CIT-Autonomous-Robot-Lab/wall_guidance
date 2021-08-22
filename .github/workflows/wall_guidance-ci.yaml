@@ -1,10 +1,9 @@
 name: clang-tidy-review
 
-# You can be more specific, but it currently only works on pull requests
 on: [pull_request]
 
 jobs:
-  build:
+  review:
     runs-on: ubuntu-18.04
 
     steps:
@@ -32,7 +31,7 @@ jobs:
                   -DBOUT_BUILD_DOCS=OFF \
                   -DCMAKE_EXPORT_COMPILE_COMMANDS=On
 
-      - uses: ZedThree/clang-tidy-review@v0.6.0
+      - uses:  uhobeike/ros-melodic-clang-tidy-review@v1 
         id: review
         with:
           build_dir: build
