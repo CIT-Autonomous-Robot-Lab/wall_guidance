@@ -35,14 +35,6 @@ target_link_libraries(
   simple_wall_guidance
   ${catkin_LIBRARIES}
 )
-
-add_executable(test_simple_wall_guidance
-  src/test_simple_wall_guidance.cpp
-)
-target_link_libraries(
-  test_simple_wall_guidance
-  ${catkin_LIBRARIES}
-)
 ################################################################################
 # Install
 ################################################################################
