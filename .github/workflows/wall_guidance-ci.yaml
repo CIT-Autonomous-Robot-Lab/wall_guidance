@@ -1,7 +1,7 @@
 name: ros1-melodic-ci
 
 on:
-  push:
+  pull_request:
     paths-ignore:
       - '**.md'
 jobs:
