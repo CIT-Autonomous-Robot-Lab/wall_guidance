@@ -18,6 +18,7 @@ jobs:
           bash step0.bash
           bash step1.bash
           cd ..
+          sudo apt install bear
           sudo apt install python-catkin-tools
           source /opt/ros/melodic/setup.bash
           bear catkin build
