@@ -22,7 +22,7 @@ jobs:
         sudo apt-get install -y clang-tidy
     - name: Prepare compile_commands.json
       run: |
-        source ~/.bashrc
+        source /opt/ros/melodic/setup.bash
         cmake -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
     - name: Create results directory
       run: |
