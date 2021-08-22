@@ -29,6 +29,7 @@ jobs:
         mkdir clang-tidy-result
     - name: Analyze
       run: |
+        ls -a
         git diff -U0 HEAD^ | clang-tidy-diff -p1 -path build -export-fixes clang-tidy-result/fixes.yml
     - name: Run clang-tidy-pr-comments action
       # Don't run this Action if fixes.yml doesn't exist - clang-tidy may not generate it in some cases
