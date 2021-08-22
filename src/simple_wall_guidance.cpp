@@ -62,6 +62,18 @@ int main(int argc, char** argv)
     ros::Publisher pub_twist; 
     ros::Subscriber sub_scan, sub_odom;
 
+    std::string test;
+    std::string test1;
+    std::string test2;
+    std::string test3;
+    std::string test4;
+    std::string test5;
+    std::string test6;
+    std::string test7;
+    std::string test8;
+    std::string test9;
+    std::string test10;
+
     pub_twist = nh.advertise<geometry_msgs::Twist>("cmd_vel", 1);
     sub_scan = nh.subscribe("scan", 1, scanCb);
     sub_odom = nh.subscribe("odom", 1, odomCb);
