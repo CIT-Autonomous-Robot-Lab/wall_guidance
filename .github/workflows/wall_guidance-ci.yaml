@@ -26,7 +26,7 @@ jobs:
           catkin build
           cd src/wall_guidance
           bear catkin build
-          sed -i -e s%/src%%g compile_commands.json
+          sed -i -e s%/src/wall_guidance%/wall_guidance%g compile_commands.json
           cd - && mv src/wall_guidance wall_guidance
           cd wall_guidance && ls
 
