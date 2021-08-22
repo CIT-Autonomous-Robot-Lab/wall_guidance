@@ -17,19 +17,13 @@ jobs:
           cd  ros_setup_scripts_Ubuntu18.04_desktop
           bash step0.bash
           bash step1.bash
-          cd .. && cd ..
-          mkdir -p src && mv wall_guidance src/wall_guidance
+          cd ..
+          rm -rf ros_setup_scripts_Ubuntu18.04_desktop
           rosdep install -r -y --from-paths --ignore-src ./
           sudo apt install bear
-          sudo apt install python-catkin-tools
           source /opt/ros/melodic/setup.bash
-          catkin build
-          cd src/wall_guidance
-          bear catkin build
-          sed -i -e s%/src/wall_guidance%/wall_guidance%g compile_commands.json
-          cd - && mv src/wall_guidance wall_guidance
-          cd wall_guidance && ls
-
+          cmake
+          bear make
 
       - uses: ZedThree/clang-tidy-review@v0.6.0
         id: review
