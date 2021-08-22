@@ -35,8 +35,8 @@ jobs:
         id: review
         with:
           build_dir: build
-          max_comments: 200
-          clang_tidy_checks: '-*,performance-*,readability-*,bugprone-*,clang-analyzer-*,cppcoreguidelines-*,mpi-*,misc-*,-readability-magic-numbers,-cppcoreguidelines-avoid-magic-numbers,-misc-non-private-member-variables-in-classes,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-cppcoreguidelines-pro-type-vararg,-clang-analyzer-optin.mpi*'
+          max_comments: 25
+          clang_tidy_checks: '-*,performance-*,clang-analyzer-*,-clang-analyzer-cplusplus*'
       # If there are any comments, fail the check
       - name: Passed C++ style guide checks
         if: steps.review.outputs.total_comments > 0
